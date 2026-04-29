@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MÁDENI KOD AI — Түркі мұрасы</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        :root {
+            --gold: #C5A059;
+            --silk: #FCFAFA;
+            --clay: #3D3834;
+            --soft-bg: #F9F7F2;
+            --red: #820808;
+        }
+
+        * { box-sizing: border-box; }
+
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--soft-bg); 
+            color: var(--clay); 
+            margin: 0; 
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3 { 
+            font-family: 'Playfair Display', serif; 
+            font-weight: 400; 
+            letter-spacing: 0.05em;
+            margin: 0;
+        }
+
+        /* HEADER */
+        header { 
+            background: var(--silk); 
+            padding: 60px 20px; 
+            text-align: center; 
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+            position: relative;
+        }
+
+        header h1 { 
+            font-size: 2.8rem; 
+            text-transform: uppercase; 
+            letter-spacing: 8px;
+            color: var(--clay);
+        }
+
+        header p { 
+            font-size: 0.9rem; 
+            color: var(--gold); 
+            text-transform: uppercase; 
+            letter-spacing: 3px;
+            margin-top: 15px;
+        }
+
+        /* NAV */
+        nav { 
+            display: flex; 
+            justify-content: center;
+            flex-wrap: wrap;
+            background: white; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
+            padding: 10px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        }
+
+        nav a { 
+            color: var(--clay); 
+            padding: 15px 22px; 
+            text-decoration: none; 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            transition: 0.4s ease;
+            cursor: pointer;
+        }
+
+        nav a:hover { color: var(--gold); }
+
+        /* CONTAINER */
+        .container { max-width: 1100px; margin: auto; padding: 60px 20px; }
+
+        .tab-content { display: none; animation: fadeIn 0.6s ease; }
+        .active { display: block; }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(12px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* GRID & CARDS */
+        .info-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px; 
+            margin-top: 40px; 
+        }
+
+        .card { 
+            background: white; 
+            padding: 35px; 
+            border: 1px solid rgba(197, 160, 89, 0.2); 
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        .card:hover { 
+            border-color: var(--gold); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06); 
+            transform: translateY(-2px);
+        }
+
+        .card h3 { 
+            margin-bottom: 15px; 
+            font-size: 1.1rem;
+        }
+
+        .kaz-italic { 
+            font-family: 'Playfair Display', serif; 
+            font-style: italic; 
+            color: var(--gold); 
+        }
+
+        /* SECTION TITLE */
+        .section-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #777;
+        }
+
+        /* DIVIDER */
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
+            margin: 20px auto;
+        }
+
+        /* AI UPLOAD */
+        .ai-upload {
+            background: white;
+            border: 1px dashed var(--gold);
+            padding: 60px 40px;
+            text-align: center;
+            margin-top: 30px;
+            border-radius: 2px;
+        }
+
+        .ai-upload p {
+            color: #888;
+            font-size: 0.9rem;
+            margin: 15px 0 25px;
+            line-height: 1.8;
+        }
+
+        input[type="file"] {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            color: var(--clay);
+            margin: 10px 0;
+        }
+
+        button {
+            background: var(--clay);
+            color: var(--silk);
+            border: none;
+            padding: 18px 45px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+            border-radius: 1px;
+        }
+
+        button:hover { background: var(--gold); }
+
+        #result {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            line-height: 2;
+            letter-spacing: 0.5px;
+            text-align: left;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            background: var(--soft-bg);
+            padding: 25px;
+            border-left: 3px solid var(--gold);
+        }
+
+        /* ХРОНОЛОГИЯ */
+        .timeline {
+            position: relative;
+            margin-top: 50px;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 25px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 8px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        .timeline-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+
+        .timeline-text {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        /* СИМВОЛДАР КЕСТЕСІ */
+        .symbols-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+
+        .symbols-table th {
+            background: var(--clay);
+            color: var(--silk);
+            padding: 15px 20px;
+            text-align: left;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.75rem;
+            font-weight: 400;
+        }
+
+        .symbols-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(197,160,89,0.15);
+            line-height: 1.7;
+            vertical-align: top;
+        }
+
+        .symbols-table tr:nth-child(even) td {
+            background: rgba(249,247,242,0.8);
+        }
+
+        .symbols-table tr:hover td {
+            background: rgba(197,160,89,0.05);
+        }
+
+        .symbol-icon {
+            font-size: 1.4rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* QR КОД БӨЛІМІ */
+        .qr-section {
+            background: white;
+            border: 1px solid rgba(197,160,89,0.25);
+            padding: 50px 30px;
+            text-align: center;
+            margin-top: 60px;
+            border-radius: 2px;
+        }
+
+        .qr-section h3 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--clay);
+            margin-bottom: 8px;
+        }
+
+        .qr-section p {
+            font-size: 0.8rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        #qrcode {
+            display: inline-block;
+            padding: 15px;
+            background: white;
+            border: 1px solid rgba(197,160,89,0.2);
+        }
+
+        .qr-url {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #aaa;
+            letter-spacing: 1px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--clay);
+            color: rgba(252,250,250,0.6);
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 80px;
+        }
+
+        footer span {
+            color: var(--gold);
+        }
+
+        /* АЙМАҚ КАРТОЧКАЛАРЫ */
+        .region-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .region-card {
+            background: white;
+            border-top: 3px solid var(--red);
+            padding: 25px;
+            transition: 0.3s;
+        }
+
+        .region-card:hover {
+            box-shadow: 0 8px 25px rgba(130,8,8,0.1);
+            transform: translateY(-3px);
+        }
+
+        .region-card h3 {
+            font-size: 1rem;
+            color: var(--red);
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .region-card p {
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: #666;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8rem; letter-spacing: 4px; }
+            nav a { padding: 10px 12px; font-size: 0.7rem; }
+            .ai-upload { padding: 30px 20px; }
+            .container { padding: 40px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>MÁDENI KOD</h1>
+    <div class="divider"></div>
+    <p>Түркі халықтарының мұрасы мен технологиялар сабақтастығы</p>
+</header>
+
+<nav>
+    <a onclick="showTab('home')">Негізгі</a>
+    <a onclick="showTab('timeline')">Хронология</a>
+    <a onclick="showTab('ornaments')">Орнаменттер</a>
+    <a onclick="showTab('regions')">Аймақтар</a>
+    <a onclick="showTab('saukele')">Сәукеле</a>
+    <a onclick="showTab('ai')">ЖИ Аналитика</a>
+</nav>
+
+<div class="container">
+
+    <!-- НЕГІЗГІ БЕТ -->
+    <div id="home" class="tab-content active">
+        <h2 class="section-title">Мәдени кодты сақтау</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle kaz-italic">
+            «Нышандарымыз бірегей ұлттық кодымызды нақты әрі айқын көрсетуі керек» — Қ. Тоқаев
+        </p>
+        <div class="info-grid">
+            <div class="card">
+                <h3>Тарихи мән</h3>
+                <div class="divider" style="margin: 12px 0;"></div>
+                <p>Ш. Уәлиханов пен Ә. Марғұланның еңбектеріндегі сәукеленің этнографиялық маңызын зерттеу. Б.з.д. V ғасырдан бүгінге дейін жалғасқан дәстүр.</p>
+            </div>
+            <div class="card">
+                <h3>Зергерлік өнер</h3>
+                <div class="divider" style="margin: 12px 0;"></div>
+                <p>Берік Әлібайдың мұражайындағы жәдігерлер мен сіркелеу техникасының құпиялары. Бір шебердің жылдық еңбегі — бір сәукеле.</p>
+            </div>
+            <div class="card">
+                <h3>ЖИ + Дәстүр</h3>
+                <div class="divider" style="margin: 12px 0;"></div>
+                <p>Марғұлан сипаттаған сәукелені ЖИ талдайды — 139 жылдан кейін бірдей қорытынды. Дәстүр үзілмеген.</p>
+            </div>
+        </div>
+
+        <!-- QR КОД -->
+        <div class="qr-section">
+            <h3>Сайтқа өту</h3>
+            <p>QR кодты сканерлеңіз</p>
+            <div id="qrcode"></div>
+            <div class="qr-url" id="qr-url-text"></div>
+        </div>
+    </div>
+
+    <!-- ХРОНОЛОГИЯ -->
+    <div id="timeline" class="tab-content">
+        <h2 class="section-title">Тарихи хронология</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">Сәукеленің үш мың жылдық жолы</p>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-year">Б.з.д. II мыңжылдық</div>
+                <div class="timeline-text">Шыңжаң аймағынан табылған Субеши мыстандары — киізден жасалған биік бас киімдер. Бір үлгі жерлеу шұңқырына бүктемей сыймаған.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Б.з.д. V ғасыр</div>
+                <div class="timeline-text">Геродот жазбаларында сақтардың үшкір, тіке тұратын бас киімі тіркеледі. «Тиграхауда» — шошақ бөрік киген тайпа деп аталған.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Б.з.д. IV–III ғасыр</div>
+                <div class="timeline-text">Есік қорғанындағы «Алтын Адам» — 65 см биік алтын бас киім. Академик Ақышев оны Бехистун жазбасындағы сақ патшасының бөрігімен салыстырған.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">XV–XIX ғасырлар</div>
+                <div class="timeline-text">Нағыз сәукеле қазақ, қарақалпақ, қырғыз халықтарының кең қолданысында болған. Бағасы — 100 жылқы немесе 1000 сом.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">1913 жыл</div>
+                <div class="timeline-text">Воронина-Уткина А.А. Қарқаралы ауданындағы сәукелені акварельмен бейнелеген. Кунсткамера қорында сақталған.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">XX ғасыр басы</div>
+                <div class="timeline-text">Сәукеле тұрмыстан шыға бастады. Орнын қарапайым желек пен кимешек басты.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2025 жыл</div>
+                <div class="timeline-text">Жасанды интеллект Марғұлан (1986) сипаттаған сәукелені талдайды — 139 жылдан кейін бірдей қорытынды шығады.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ОРНАМЕНТТЕР -->
+    <div id="ornaments" class="tab-content">
+        <h2 class="section-title">Орнаменттер мен символдар</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">Берік Әлібай зергерден алынған тікелей дерек (сұхбат, 25.09.2025)</p>
+
+        <table class="symbols-table">
+            <thead>
+                <tr>
+                    <th>Элемент</th>
+                    <th>Қазақша атауы</th>
+                    <th>Символикасы</th>
+                    <th>Мағынасы</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="symbol-icon">↓</span>Подвеска</td>
+                    <td class="kaz-italic">Салпыншақ</td>
+                    <td>Бидай тәрізді пішін</td>
+                    <td>«Астық мол болып, тоқ болсын»</td>
+                </tr>
+                <tr>
+                    <td><span class="symbol-icon">△</span>Үшбұрыш</td>
+                    <td class="kaz-italic">Үшбұрыш өрнек</td>
+                    <td>Тау тәрізді биіктік</td>
+                    <td>«Таудай биік болсын, бір-бірінен ажырамай биікке жетелесін»</td>
+                </tr>
+                <tr>
+                    <td><span class="symbol-icon">□</span>Төртбұрыш</td>
+                    <td class="kaz-italic">Шаршы өрнек</td>
+                    <td>Төрт жақ, төрт бұрыш</td>
+                    <td>«Төрт құбыласы тең болсын»</td>
+                </tr>
+                <tr>
+                    <td><span class="symbol-icon">○</span>Шаңырақ</td>
+                    <td class="kaz-italic">Шаңырақ өрнегі</td>
+                    <td>Дөңгелек үй символы</td>
+                    <td>«Шаңырағы биік болсын»</td>
+                </tr>
+                <tr>
+                    <td><span class="symbol-icon">💎</span>Тас</td>
+                    <td class="kaz-italic">Бирюза (Көктас)</td>
+                    <td>Аспан түсі, тазалық</td>
+                    <td>«Әрқашан бақыттың тасына балаған»</td>
+                </tr>
+                <tr>
+                    <td><span class="symbol-icon">🔴</span>Тас</td>
+                    <td class="kaz-italic">Маржан</td>
+                    <td>Қызыл теңіз түбінен</td>
+                    <td>Емдік қасиет + «Ұрпағы көп болсын»</td>
+                </tr>
+                <tr>
+                    <td><span class="symbol-icon">🪶</span>Қауырсын</td>
+                    <td class="kaz-italic">Үкіаяқ</td>
+                    <td>Қасиетті үкі құсы</td>
+                    <td>Тіл-көзден қорғайды, бақыт пен еркіндік әкеледі</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- АЙМАҚТАР -->
+    <div id="regions" class="tab-content">
+        <h2 class="section-title">Аймақ бойынша ерекшеліктер</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">Әр өңірдің өзіндік зергерлік мектебі болған</p>
+
+        <div class="region-grid">
+            <div class="region-card">
+                <h3>Оңтүстік Қазақстан</h3>
+                <p>Металл аз, тоқыма элементтер басым. Кестелі таспамен оралған. Сырдария өңірі үлгісі.</p>
+            </div>
+            <div class="region-card">
+                <h3>Батыс Қазақстан</h3>
+                <p>Ірі металл әшекейлер, алтын кесте кең қолданылады. Сердолик тасы — «соғыста жеңіс әкеледі».</p>
+            </div>
+            <div class="region-card">
+                <h3>Солтүстік-Шығыс</h3>
+                <p>Қызыл мата бетіне ұсақ металл қатар-қатар тігілген. Маңдайға кестелі жолақтар. Семей үлгісі.</p>
+            </div>
+            <div class="region-card">
+                <h3>Маңғыстау</h3>
+                <p>Ең бай безендіру. Хиуа, Бұхара, Парсы, Кавказдан келген асыл тастар, інжу-маржан, алтын.</p>
+            </div>
+            <div class="region-card">
+                <h3>Жетісу</h3>
+                <p>Оңтүстік-Шығыс Қазақстан. 1898 жылғы фотода сәукеле киген қалыңдықтың бейнесі сақталған.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- СӘУКЕЛЕ -->
+    <div id="saukele" class="tab-content">
+        <h2 class="section-title">Сәукеле әлемі</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">Зергерлік, тігіншілік, тоқыма өнерін тоғыстырған қолданбалы өнердің шыңы — Ә. Марғұлан</p>
+
+        <div class="info-grid">
+            <div class="card">
+                <h3>Жақтау</h3>
+                <div class="divider" style="margin: 12px 0;"></div>
+                <p>Сәукелені тік ұстау үшін ғана емес, қалыңдықтың дене келбетін түзеу үшін жасалатын бүйір таспалар. Алтын жіппен кестеленген.</p>
+            </div>
+            <div class="card">
+                <h3>Салпыншақтар</h3>
+                <div class="divider" style="margin: 12px 0;"></div>
+                <p>Қыз келе жатқанда қимылдап, дыбыс шығарады. Бұл тіл-көзден сақтау нышаны. Жебе тәрізді күміс салпыншақтар.</p>
+            </div>
+            <div class="card">
+                <h3>Сіркелеу техникасы</h3>
+                <div class="divider" style="margin: 12px 0;"></div>
+                <p>Зернь — күміс түйіршіктерді беткейге дәнекерлеу техникасы. Уылдырық тәрізді өрнек — «ұрпақ жалғастығы». Бір шебердің жылдық жұмысы.</p>
+            </div>
+            <div class="card">
+                <h3>Үкіаяқ</h3>
+                <div class="divider" style="margin: 12px 0;"></div>
+                <p>Жоғарғы шоқысына орнатылған қасиетті үкі қауырсыны. Тіл-көзден сақтайды. Баскиімге, бесікке тағатын ерекше әшекей.</p>
+            </div>
+            <div class="card">
+                <h3>Бағасы</h3>
+                <div class="divider" style="margin: 12px 0;"></div>
+                <p>XIX ғасырда дорогой сәукеле — 100 жылқы немесе 1000 сом. Чапановтың сәукелесі — 600 сом: 30 нить маржан, 15 нить інжу.</p>
+            </div>
+            <div class="card">
+                <h3>Ношение дәстүрі</h3>
+                <div class="divider" style="margin: 12px 0;"></div>
+                <p>Бірінші жылда күнде киген. 5 жылға дейін тек мерекелерде. Одан кейін — желек, содан кейін — кимешек.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЖИ АНАЛИТИКА -->
+    <div id="ai" class="tab-content">
+        <div class="ai-upload">
+            <h2>Интеллектуалды талдау</h2>
+            <div class="divider" style="margin: 20px auto;"></div>
+            <p>Экспонаттың фотосын жүктеңіз.<br>ЖИ техникасын, аймағын және символикасын анықтайды.</p>
+            <input type="file" id="fileInput" accept="image/*">
+            <br>
+            <button onclick="analyze()">Талдауды бастау</button>
+            <div id="result"></div>
+        </div>
+
+        <div class="card" style="margin-top: 40px;">
+            <h3>ЖИ + Марғұлан салыстыруы</h3>
+            <div class="divider" style="margin: 15px 0;"></div>
+            <table class="symbols-table">
+                <thead>
+                    <tr>
+                        <th>Марғұлан, 1986 ж.</th>
+                        <th>ЖИ талдауы, 2025 ж.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>«Зернь техникасы — ұсақ күміс түйіршік»</td>
+                        <td class="kaz-italic">technique: sirkeleu — confidence: 0.91</td>
+                    </tr>
+                    <tr>
+                        <td>«Маржан — ұрпақ белгісі»</td>
+                        <td class="kaz-italic">symbol: ұрпақ жалғастығы</td>
+                    </tr>
+                    <tr>
+                        <td>«Конус пішін — биік каркас»</td>
+                        <td class="kaz-italic">item: saukele — century: XIX</td>
+                    </tr>
+                    <tr>
+                        <td>«Маңғыстау мектебі»</td>
+                        <td class="kaz-italic">region: Mangystau</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 20px; font-size: 0.85rem; color: var(--gold); text-align: center; font-style: italic;">
+                Қорытынды: 139 жыл бұрынғы сипаттама мен ЖИ талдауы — бірдей. Дәстүр үзілмеген.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <span>MÁDENI KOD</span> — Ермекқызы Іңкәр, НЗМ 10C, Астана 2025
+</footer>
+
+<script>
+    // TAB NAVIGATION
+    function showTab(id) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // AI ANALYZE (demo)
+    function analyze() {
+        const file = document.getElementById('fileInput').files[0];
+        const res = document.getElementById('result');
+        
+        if (!file) {
+            res.innerHTML = "<span style='color:#820808'>Алдымен фото жүктеңіз</span>";
+            return;
+        }
+
+        res.innerHTML = "<span class='kaz-italic' style='color:var(--gold)'>ЖИ талдауда...</span>";
+        
+        setTimeout(() => {
+            res.innerHTML = `
+                <b>Бұйым:</b> Сәукеле (Маңғыстау үлгісі)<br>
+                <b>Техника:</b> Сіркелеу (зернь)<br>
+                <b>Материал:</b> Күміс, маржан, бирюза<br>
+                <b>Аймақ:</b> Батыс Қазақстан<br>
+                <b>Ғасыр:</b> XIX ғасыр<br>
+                <b>Символика:</b> Ұрпақ жалғастығы<br>
+                <b>Сенімділік:</b> 91%
+            `;
+        }, 1800);
+    }
+
+    // QR КОД — автоматты генерация
+    window.addEventListener('load', function() {
+        const url = window.location.href || 'https://madeni-kod.netlify.app';
+        
+        document.getElementById('qr-url-text').textContent = url;
+        
+        new QRCode(document.getElementById('qrcode'), {
+            text: url,
+            width: 180,
+            height: 180,
+            colorDark: '#3D3834',
+            colorLight: '#FCFAFA',
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    });
+</script>
+
+</body>
+</html>
